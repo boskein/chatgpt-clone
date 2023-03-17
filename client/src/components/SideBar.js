@@ -41,10 +41,10 @@ const SideBar = () => {
     <section className={` ${open ? "w-72" : "w-16"} sidebar`}>
       <div className="sidebar__app-bar">
         <div className={`sidebar__app-logo ${!open && "scale-0 hidden"} `}>
-          <span className='w-8 h-8'><img src={bot} alt="" /></span>
+          <span className='w-8 h-8'><img src={'https://firebasestorage.googleapis.com/v0/b/gauler-665ba.appspot.com/o/logos%2Febbiner-logo.png?alt=media&token=2479d59d-f9d2-4f47-9be4-f6ded9c8492b'} alt="Logo de Ebbiner" width={30} height={30} /></span>
         </div>
         <h1 className={`sidebar__app-title ${!open && "scale-0 hidden"}`}>
-          GPT3-Chatbot
+          Ebbiner - GPT4
         </h1>
         <div className='sidebar__btn-close' onClick={() => setOpen(!open)}>
           {open ? <MdClose className='sidebar__btn-icon' /> : <MdMenu className='sidebar__btn-icon' />}
@@ -56,7 +56,7 @@ const SideBar = () => {
           <div className='nav__icons'>
             <MdAdd />
           </div>
-          <h1 className={`${!open && "hidden"}`}>New chat</h1>
+          <h1 className={`${!open && "hidden"}`}>Nuevo chat</h1>
         </span>
       </div>
       {limit >= 0 &&
@@ -70,27 +70,11 @@ const SideBar = () => {
       <div className="nav__bottom">
         <DarkMode open={open} />
         <div className="nav">
-          <a href='https://www.buymeacoffee.com/eyuel' rel="noreferrer" target='_blank' className="nav__item">
-            <div className="nav__icons">
-              <MdOutlineCoffee />
-            </div>
-            <h1 className={`${!open && "hidden"}`}>Support this project</h1>
-          </a>
-        </div>
-        <div className="nav">
-          <a href='https://github.com/EyuCoder/chatgpt-clone' className="nav__item">
-            <div className="nav__icons">
-              <MdOutlineQuestionAnswer />
-            </div>
-            <h1 className={`${!open && "hidden"}`}>Update & FAQ</h1>
-          </a>
-        </div>
-        <div className="nav">
           <span className="nav__item" onClick={SignOut}>
             <div className="nav__icons">
               <MdOutlineLogout />
             </div>
-            <h1 className={`${!open && "hidden"}`}>Log out</h1>
+            <h1 className={`${!open && "hidden"}`}>Salir</h1>
           </span>
         </div>
       </div>

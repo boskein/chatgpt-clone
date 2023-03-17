@@ -12,11 +12,11 @@ const ChatView = () => {
   const inputRef = useRef()
   const [formValue, setFormValue] = useState('')
   const [thinking, setThinking] = useState(false)
-  const options = ['ChatGPT', 'DALL·E']
+  const options = ['GPT-4', 'DALL·E']
   const [selected, setSelected] = useState(options[0])
   const [messages, addMessage, , , setLimit] = useContext(ChatContext)
   const user = auth.currentUser.uid
-  const picUrl = auth.currentUser.photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'
+  const picUrl = auth.currentUser.photoURL || 'https://firebasestorage.googleapis.com/v0/b/gauler-665ba.appspot.com/o/logos%2Febbiner-logo.png?alt=media&token=2479d59d-f9d2-4f47-9be4-f6ded9c8492b'
 
   /**
    * Scrolls the chat area to the bottom.
@@ -55,9 +55,7 @@ const ChatView = () => {
     const newMsg = formValue
     const aiModel = selected
 
-    const BASE_URL = process.env.REACT_APP_BASE_URL
-    const PATH = aiModel === options[0] ? 'davinci' : 'dalle'
-    const POST_URL = BASE_URL + PATH
+    const POST_URL = 'https://api.openai.com/v1/chat/completions'
 
     setThinking(true)
     setFormValue('')
@@ -67,20 +65,25 @@ const ChatView = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer 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`
       },
       body: JSON.stringify({
-        prompt: newMsg,
-        user: user
+        messages: [
+          { "role": "user", "content": newMsg }
+        ],
+        model: "gpt-4"
       })
     })
 
     const data = await response.json()
+
+    console.log(data)
     setLimit(data.limit)
 
     console.log(response.status)
     if (response.ok) {
       // The request was successful
-      data.bot && updateMessage(data.bot, true, aiModel)
+      data.choices[0] && updateMessage(data.choices[0]?.message?.content, true, aiModel)
     } else if (response.status === 429) {
       setThinking(false)
     } else {
@@ -120,13 +123,13 @@ const ChatView = () => {
 
         <span ref={messagesEndRef}></span>
       </main>
-      <form className='form' onSubmit={sendMessage}>
-        <select value={selected} onChange={(e) => setSelected(e.target.value)} className="dropdown" >
-          <option>{options[0]}</option>
-          <option>{options[1]}</option>
+      <form className='form px-3' onSubmit={sendMessage}>
+        <select value={selected} onChange={(e) => setSelected(e.target.value)} className="dropdown">
+          <option className='mb-4'>{options[0]}</option>
+          {/* <option>{options[1]}</option> */}
         </select>
-        <textarea ref={inputRef} className='chatview__textarea-message' value={formValue} onChange={(e) => setFormValue(e.target.value)} />
-        <button type="submit" className='chatview__btn-send' disabled={!formValue}>Send</button>
+        <textarea ref={inputRef} className='chatview__textarea-message' placeholder='Escribe tu mensaje aquí...' value={formValue} onChange={(e) => setFormValue(e.target.value)} />
+        <button type="submit" className='chatview__btn-send' disabled={!formValue}>Enviar</button>
       </form>
     </div>
   )

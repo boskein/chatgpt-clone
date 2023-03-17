@@ -15,10 +15,10 @@ const SignIn = () => {
       <div className='signin__container'>
         <button className="signin__btn flex items-center justify-center" onClick={signInWithGoogle}>
           <FcGoogle className='m-2' />
-          Sign in with Google
+          Ingresar con Google
         </button>
 
-        <p className='signin__tos'>Do not violate the community guidelines or you will be banned for life!</p>
+        <p className='signin__tos'>Ebbiner - GPT4</p>
       </div>
     </div>
   )
